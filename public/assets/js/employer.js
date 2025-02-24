@@ -1,6 +1,39 @@
 document.addEventListener('DOMContentLoaded', fetchEmployers);
 document.addEventListener('DOMContentLoaded', loadEmployerData);
 
+// Function to validate email format
+function isValidEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
+
+// Function to validate phone number (only digits and length 10-15)
+function isValidPhone(phone) {
+    const phoneRegex = /^\d{10,15}$/;
+    return phoneRegex.test(phone);
+}
+
+// Function to validate form input before submitting
+function validateEmployerForm(name, email, phone, position) {
+    if (!name.trim()) {
+        alert("Name is required.");
+        return false;
+    }
+    if (!position.trim()) {
+        alert("Position is required.");
+        return false;
+    }
+    if (!email.trim() || !isValidEmail(email)) {
+        alert("Please enter a valid email.");
+        return false;
+    }
+    if (!phone.trim() || !isValidPhone(phone)) {
+        alert("Please enter a valid phone number (10-15 digits).");
+        return false;
+    }
+    return true;
+}
+
 async function loadEmployerData() {
     const urlParams = new URLSearchParams(window.location.search);
     const employerId = urlParams.get('id');
@@ -116,16 +149,24 @@ async function deleteEmployer(employerId) {
 async function addEmployer() {
   const employerName = document.getElementById('employerName').value.trim();
   const employerPosition = document.getElementById('employerPosition').value.trim();
+  const employerEmail = document.getElementById('employerEmail').value;
+  const employerPhone = document.getElementById('employerPhone').value;
+  const employerAddress = document.getElementById('employerAddress').value;
 
   if (!employerName || !employerPosition) {
       alert("Please enter both name and position.");
       return;
   }
 
+  if (!validateEmployerForm(employerName, employerEmail, employerPhone, employerPosition)) return;
+
   const newEmployer = { 
       id: Date.now().toString(), // Generate unique ID
       name: employerName, 
-      position: employerPosition 
+      position: employerPosition ,
+      email: employerEmail,
+      phone: employerPhone,
+      address: employerAddress
   };
 
   try {
@@ -158,6 +199,8 @@ async function updateEmployer() {
     const employerEmail = document.getElementById('employerEmail').value;
     const employerPhone = document.getElementById('employerPhone').value;
     const employerAddress = document.getElementById('employerAddress').value;
+
+    if (!validateEmployerForm(employerName, employerEmail, employerPhone, employerPosition)) return;
 
     const updatedEmployer = {
         id: employerId,
