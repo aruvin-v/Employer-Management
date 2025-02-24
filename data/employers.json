@@ -4,11 +4,15 @@
     "name": "John Doe",
     "position": "Software Engineer",
     "email": "john.doe@example.com",
-    "phone": "123-456-7890"
+    "phone": "123-456-7899",
+    "address": "123 Cross Street, Ohio"
   },
   {
     "id": "1740210454447",
     "name": "Test",
-    "position": "Tester"
+    "position": "Tester",
+    "email": "john.doe@example.com",
+    "phone": "123-456-7890",
+    "address": "123 Main St, Anytown, USA"
   }
 ]

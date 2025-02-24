@@ -172,6 +172,26 @@ app.delete('/employers/:id', (req, res) => {
     });
 });
 
+// Update employer by ID
+app.put('/employers/:id', (req, res) => {
+    fs.readFile(employersFile, 'utf8', (err, data) => {
+        if (err) return res.status(500).json({ message: "Error reading employers file" });
+
+        let employers = JSON.parse(data);
+        const index = employers.findIndex(emp => emp.id === req.params.id);
+
+        if (index === -1) return res.status(404).json({ message: "Employer not found" });
+
+        employers[index] = { ...employers[index], ...req.body };
+
+        fs.writeFile(employersFile, JSON.stringify(employers, null, 2), err => {
+            if (err) return res.status(500).json({ message: "Error saving employer data" });
+
+            res.json({ message: "Employer updated successfully" });
+        });
+    });
+});
+
 // Start server
 const PORT = 3000;
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));

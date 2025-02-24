@@ -19,6 +19,16 @@ body {
   width: 320px;
 }
 
+/* Centered container */
+.grid-container {
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: auto;
+}
+
 /* Title */
 h2 {
   color: #333;
@@ -43,7 +53,7 @@ input[type="text"]:focus, input[type="password"]:focus {
 }
 
 /* Login button */
-button {
+.btn {
   width: 100%;
   padding: 12px;
   margin-top: 10px;
@@ -56,8 +66,26 @@ button {
   transition: 0.3s;
 }
 
-button:hover {
+/* Login button */
+.delete-btn {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border: none;
+  background-color: #a80101;
+  color: white;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn:hover {
   background-color: #0056b3;
+}
+
+.delete-btn:hover {
+  background-color: #ff0000;
 }
 
 /* Register link */
@@ -73,4 +101,30 @@ p a {
 
 p a:hover {
   text-decoration: underline;
+}
+
+/* Table Styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+}
+
+th {
+  background-color: #007bff;
+  color: white;
+  text-transform: uppercase;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
 }

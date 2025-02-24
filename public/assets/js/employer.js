@@ -23,9 +23,12 @@ async function loadEmployerData() {
         }
 
         // Populate form fields
-        document.getElementById('employerId').value = employer.id;
-        document.getElementById('employerName').value = employer.name;
-        document.getElementById('employerPosition').value = employer.position;
+        document.getElementById('employerId').value = employer.id || '';
+        document.getElementById('employerName').value = employer.name || '';
+        document.getElementById('employerPosition').value = employer.position || '';
+        document.getElementById('employerEmail').value = employer.email || '';
+        document.getElementById('employerPhone').value = employer.phone || '';
+        document.getElementById('employerAddress').value = employer.address || '';
     } catch (error) {
         console.error("Error fetching employer:", error);
     }
@@ -50,6 +53,9 @@ function displayEmployers(employers) {
         <tr>
             <th>Name</th>
             <th>Position</th>
+            <th>Email</th>
+            <th>Address</th>
+            <th>Phone</th>
             <th>Actions</th>
         </tr>
     `; // Reset table before populating
@@ -64,9 +70,12 @@ function displayEmployers(employers) {
         row.innerHTML = `
             <td>${employer.name}</td>
             <td>${employer.position}</td>
+            <td>${employer.email}</td>
+            <td>${employer.address}</td>
+            <td>${employer.phone}</td>
             <td>
-                <button onclick="editEmployer('${employer.id}')">Edit</button>
-                <button onclick="deleteEmployer('${employer.id}')">Delete</button>
+                <button onclick="editEmployer('${employer.id}')" class="btn">Edit</button>
+                <button onclick="deleteEmployer('${employer.id}')" class = "delete-btn">Delete</button>
             </td>
         `;
         employerTable.appendChild(row);
@@ -140,4 +149,38 @@ async function addEmployer() {
       console.error("Error adding employer:", error);
       alert("Error adding employer.");
   }
+}
+
+async function updateEmployer() {
+    const employerId = document.getElementById('employerId').value;
+    const employerName = document.getElementById('employerName').value;
+    const employerPosition = document.getElementById('employerPosition').value;
+    const employerEmail = document.getElementById('employerEmail').value;
+    const employerPhone = document.getElementById('employerPhone').value;
+    const employerAddress = document.getElementById('employerAddress').value;
+
+    const updatedEmployer = {
+        id: employerId,
+        name: employerName,
+        position: employerPosition,
+        email: employerEmail,
+        phone: employerPhone,
+        address: employerAddress
+    };
+
+    try {
+        const response = await fetch(`/employers/${employerId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(updatedEmployer)
+        });
+
+        if (!response.ok) throw new Error("Failed to update employer.");
+
+        alert("Employer updated successfully.");
+        window.location.href = 'dashboard.html'; // Redirect to dashboard
+    } catch (error) {
+        console.error("Error updating employer:", error);
+        alert("Error updating employer.");
+    }
 }
